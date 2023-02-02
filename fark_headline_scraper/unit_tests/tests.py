@@ -7,7 +7,7 @@ Script full of tests to test each created function in the module.
 import pytest
 
 from ..utilities import *
-
+from ..web_access import *
 
 def test_connected_to_internet():
 
@@ -22,3 +22,8 @@ def test_is_website_up():
 
     # Check that a website that doesn't exist returns false
     assert is_website_up("https://thisisnotarealwebsiteatall.isit/") is False
+
+
+def test_findall_ahref():
+
+    findall_ahref()
