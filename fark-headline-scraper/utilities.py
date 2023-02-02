@@ -33,7 +33,8 @@ def is_website_up(website_url: str) -> bool:
     """
     Check that a website is up and still available.
 
-    :param website_url:
+    :param website_url: The website to check
+    :type website_url: str
     :return: Is the website functioning and communicating with this computer
     rtype: bool
     """
