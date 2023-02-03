@@ -46,3 +46,18 @@ def is_website_up(website_url: str) -> bool:
         pass
 
     return False
+
+
+def get_webpage_html(website_url: str) -> str:
+    """
+    Get the raw html text of a webpage
+
+    :param website_url: The website to get the raw html text from
+    :type website_url: str
+    :return:
+    rtype: str
+    """
+
+    raw = requests.get(website_url).text
+
+    return raw
