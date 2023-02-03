@@ -5,15 +5,22 @@ Functions to access headline data on the website and download it in a raw
 format.
 """
 
+from bs4 import BeautifulSoup
 
-def findall_ahref(website_url: str) -> list[str]:
+
+def findall_href(webpage_text: str) -> list[str]:
     """
     Find all the links on a webpage.
 
-    :param website_url: The url of the webpage to search.
-    :type website_url: str
+    :param webpage_text: The raw html text of a webpage.
+    :type webpage_text: str
     :return: a list of the full urls of the discovered links
     rtype: list[str]
     """
-    pass
+    soup = BeautifulSoup(webpage_text, 'html.parser')
+
+    urls = [x.get('href') for x in soup.find_all('a')]
+
+    return urls
+
 
