@@ -24,3 +24,14 @@ def findall_href(webpage_text: str) -> list[str]:
     return urls
 
 
+def extract_headline_row(webpage_text: str) -> dict:
+    """
+    Extract all the headline rows from the webpage text of a Fark webpage and
+    return a dict of all the headline metadata.
+
+    :param webpage:
+    :type webpage_text: str
+    :return: structured metadata of all the headlines in the webpage text
+    rtype: dict
+    """
+    pass
