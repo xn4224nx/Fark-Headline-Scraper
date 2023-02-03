@@ -7,7 +7,7 @@ Script full of tests to test each created function in the module.
 import pytest
 
 from ..utilities import *
-from ..web_access import *
+from ..html_parsing import *
 
 
 def test_connected_to_internet():
@@ -51,3 +51,5 @@ def test_findall_href():
     assert all([isinstance(link, str) for link in links])
 
     assert len(links) == 10
+
+    assert '/news/uk-england-64515347' in links
