@@ -36,5 +36,18 @@ def test_get_webpage_html():
 
 
 def test_findall_href():
-    pass
-    #findall_href()
+
+    # Load the test data
+    with open(r"fark_headline_scraper\unit_tests\test_data\links.txt") as file:
+        data = file.read()
+
+    # If this fails check the test data not the function
+    assert isinstance(data, str)
+
+    links = findall_href(data)
+
+    assert isinstance(links, list)
+
+    assert all([isinstance(link, str) for link in links])
+
+    assert len(links) == 10
