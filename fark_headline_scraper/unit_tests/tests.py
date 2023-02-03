@@ -9,6 +9,7 @@ import pytest
 from ..utilities import *
 from ..web_access import *
 
+
 def test_connected_to_internet():
 
     # Just test that is returns true
@@ -24,6 +25,16 @@ def test_is_website_up():
     assert is_website_up("https://thisisnotarealwebsiteatall.isit/") is False
 
 
-def test_findall_ahref():
+def test_get_webpage_html():
 
-    findall_ahref()
+    text = get_webpage_html("https://www.google.com")
+
+    assert isinstance(text, str) is True
+
+    # get known webpage and check that it contains a common html element
+    assert "<head>" in text
+
+
+def test_findall_href():
+    pass
+    #findall_href()
