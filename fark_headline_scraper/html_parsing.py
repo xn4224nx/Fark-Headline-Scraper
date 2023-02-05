@@ -38,19 +38,23 @@ def extract_headline_row(webpage_text: str) -> dict:
 
     regex = re.compile('.*headlineRow.*')
 
+    headline_data = {}
+
     # Loop over all the headline rows
     for headline in soup.find_all("tr", {"class" : regex}):
 
-        # Extract the topic
-        print(headline.find("a", attrs={"title": True})["title"])
+        # Extract the article link
+        headline_link = headline.find("a", attrs={"href": True})["href"]
 
-        # Extract the URL
-        print(headline.find("a", attrs={"href": True})["href"])
+        # Extract details from the link
+        link_id = re.search(r"goto/(\d+)/", headline_link).group(1)
+        article_root = re.search(r"/\d+/([a-zA-Z\.]+)", headline_link).group(1)
 
-        # Extract the number of comments
-        print(headline.find(class_='headlineComments').text.strip())
+        headline_data[link_id] = {
+            "Article Site": article_root,
+            "Topic": headline.find("a", attrs={"title": True})["title"],
+            "Comments": headline.find(class_='headlineComments').text.strip(),
+            "Headline": headline.find("span", class_="headline").text.strip()
+        }
 
-        # Extract the headline text
-        print(headline.find("span", class_="headline").text.strip())
-
-        break
+    return headline_data
