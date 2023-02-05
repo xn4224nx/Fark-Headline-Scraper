@@ -38,8 +38,8 @@ def test_get_webpage_html():
 def test_findall_href():
 
     # Load the test data
-    with open(r"fark_headline_scraper\unit_tests\test_data\links.txt") as file:
-        data = file.read()
+    with open(r"fark_headline_scraper\unit_tests\test_data\links.txt") as f:
+        data = f.read()
 
     # If this fails check the test data not the function
     assert isinstance(data, str)
@@ -53,3 +53,23 @@ def test_findall_href():
     assert len(links) == 10
 
     assert '/news/uk-england-64515347' in links
+
+
+def test_extract_headline_row():
+
+    # Load the test data
+    with open (r"fark_headline_scraper\unit_tests\test_data\webpage.txt") as f:
+        data = f.read()
+
+    # If this fails check the test data not the function
+    assert isinstance(data, str)
+
+    headlines = extract_headline_row(data)
+
+    assert isinstance(headlines, dict)
+
+    assert all([isinstance(y, dict) for x,y in headlines.items()])
+
+    assert len(headlines) == 240
+
+    assert '23357' in headlines
