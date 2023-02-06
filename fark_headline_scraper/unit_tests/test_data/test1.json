@@ -1,0 +1,7 @@
+{
+	"0":{"File": "myfile01.txt", "Folder": "myfolder1","Size": 45},
+	"1":{"File": "myfile02.txt", "Folder": "myfolder2","Size": 46},
+	"2":{"File": "myfile03.txt", "Folder": "myfolder3","Size": 47},
+	"3":{"File": "myfile04.txt", "Folder": "myfolder4","Size": 48},
+	"4":{"File": "myfile05.txt", "Folder": "myfolder5","Size": 49}
+}

@@ -82,3 +82,21 @@ def test_dir_check():
 
     # This should not
     assert not dir_check(r"fark_headline_scraper\unit_tests\not_exist", False)
+
+def test_load_json():
+
+    data = load_json(r"fark_headline_scraper\unit_tests\test_data\test0.json")
+
+    assert isinstance(data, dict)
+    assert len(data) == 5
+    assert "00" in data
+    assert "File" in data["20"]
+
+def test_load_all_json_in_dir():
+
+    data = load_all_json_in_dir(r"fark_headline_scraper\unit_tests\test_data")
+
+    assert isinstance(data, dict)
+    assert len(data) == 15
+    assert "00" in data
+    assert "File" in data["20"]
