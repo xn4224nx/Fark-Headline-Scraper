@@ -9,6 +9,7 @@ diverse set of functions.
 import socket
 import requests
 import os
+import json
 
 
 def connected_to_internet() -> bool:
@@ -90,3 +91,61 @@ def dir_check(dir_fp: str, create=True) -> bool:
     # Otherwise indicate it doesn't exist
     else:
         return False
+
+
+def load_json(json_fp: str, raise_for_missing=True) -> dict:
+    """
+    Load a *.JSON file from disk and return as a dictionary.
+
+    :param json_fp: File path to the *.JSON file to load from disk.
+    :type json_fp: str
+
+    :param raise_for_missing: Should an error be raised for a missing file?
+    :type raise_for_missing: bool
+
+    :return: A dict of the loaded data or empty if not found
+    """
+    try:
+        with open(json_fp, "r") as f:
+            data = json.load(f)
+    except OSError:
+
+        if raise_for_missing:
+            raise OSError(f"File '{json_fp}' was not found.")
+
+        else:
+            return {}
+
+    return data
+
+
+def load_all_json_in_dir(dir_fp: str) -> dict:
+    """
+    Find all *.JSON files in a directory load all of them and try and combine
+    them and return one dict with all the JSONs combined.
+
+    :param dir_fp: A file path to a directory of *.JSON files to combine.
+    :return:
+    rtype: dict
+    """
+
+    found_jsons = []
+    loaded_jsons = []
+
+    # Find all *.JSON files in the directory
+    for file in os.listdir("dir_fp"):
+        if file.upper().endswith(".JSON"):
+            found_jsons.append(os.path.abspath(file))
+
+    # If none have been found raise exception
+    if not found_jsons:
+        raise Exception(f"No *.JSON files found in the folder '{dir_fp}'.")
+
+    # Load each *.JSON from disk into a dict
+    for file in found_jsons:
+        loaded_jsons.append(load_json(file))
+
+    # Combine all the dicts in the list `loaded_jsons` into one big dict
+    comb_dict = {k: v for d in loaded_jsons for k, v in d.items()}
+
+    return comb_dict
