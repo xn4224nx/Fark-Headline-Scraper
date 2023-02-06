@@ -12,7 +12,7 @@ from ..html_parsing import *
 
 def test_connected_to_internet():
 
-    # Just test that is returns true
+    # Just test that it returns true
     assert connected_to_internet() is True
 
 
@@ -73,3 +73,12 @@ def test_extract_headline_row():
     assert len(headlines) == 240
 
     assert '23357' in headlines
+
+
+def test_dir_check():
+
+    # This directory should exist
+    assert dir_check(r"fark_headline_scraper\unit_tests\test_data", False)
+
+    # This should not
+    assert not dir_check(r"fark_headline_scraper\unit_tests\not_exist", False)

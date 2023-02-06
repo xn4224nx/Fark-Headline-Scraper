@@ -8,6 +8,7 @@ diverse set of functions.
 
 import socket
 import requests
+import os
 
 
 def connected_to_internet() -> bool:
@@ -61,3 +62,31 @@ def get_webpage_html(website_url: str) -> str:
     raw = requests.get(website_url).text
 
     return raw
+
+
+def dir_check(dir_fp: str, create=True) -> bool:
+    """
+    Check if a folder at `dir_fp` exists and if not create it.
+
+    :param dir_fp: File path of the directory to create.
+    :type dir_fp: str
+
+    :param create: Should a folder be created if they don't exist?
+    :type create: bool
+
+    :return: Has the folder been found or created?
+    rtype: bool
+    """
+
+    # Does the folder exist
+    if os.path.isdir(dir_fp):
+        return True
+
+    # If not create it
+    elif create:
+        os.makedirs(dir_fp, exist_ok=True)
+        return True
+
+    # Otherwise indicate it doesn't exist
+    else:
+        return False
