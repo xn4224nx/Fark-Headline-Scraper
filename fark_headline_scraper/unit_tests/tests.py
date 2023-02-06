@@ -47,11 +47,8 @@ def test_findall_href():
     links = findall_href(data)
 
     assert isinstance(links, list)
-
     assert all([isinstance(link, str) for link in links])
-
     assert len(links) == 10
-
     assert '/news/uk-england-64515347' in links
 
 
@@ -67,11 +64,8 @@ def test_extract_headline_row():
     headlines = extract_headline_row(data)
 
     assert isinstance(headlines, dict)
-
     assert all([isinstance(y, dict) for x,y in headlines.items()])
-
     assert len(headlines) == 240
-
     assert '23357' in headlines
 
 
