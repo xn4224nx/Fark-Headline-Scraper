@@ -9,7 +9,9 @@ diverse set of functions.
 import socket
 import requests
 import os
+import pathlib
 import json
+import re
 
 
 def connected_to_internet() -> bool:
@@ -133,9 +135,7 @@ def load_all_json_in_dir(dir_fp: str) -> dict:
     loaded_jsons = []
 
     # Find all *.JSON files in the directory
-    for file in os.listdir("dir_fp"):
-        if file.upper().endswith(".JSON"):
-            found_jsons.append(os.path.abspath(file))
+    found_jsons = list(pathlib.Path(dir_fp).rglob("*.json"))
 
     # If none have been found raise exception
     if not found_jsons:
