@@ -6,20 +6,35 @@ format.
 """
 
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin, urlparse
 import re
 
-def findall_href(webpage_text: str) -> list[str]:
+
+def findall_href(webpage_text: str, page_url: str) -> list[str]:
     """
     Find all the links on a webpage.
 
     :param webpage_text: The raw html text of a webpage.
     :type webpage_text: str
+
+    :param page_url: The url of the original webpage
+    :type page_url: str
+
     :return: a list of the full urls of the discovered links
     rtype: list[str]
     """
     soup = BeautifulSoup(webpage_text, 'html.parser')
 
     urls = [x.get('href') for x in soup.find_all('a')]
+
+    # Extract the base URL
+    url_split = urlparse(page_url)
+    base_url = url_split.scheme + "://" + url_split.netloc
+
+    # Repair partial URLs
+    for i in range(len(urls)):
+        if base_url not in urls[i]:
+            urls[i] = base_url + urls[i]
 
     return urls
 
