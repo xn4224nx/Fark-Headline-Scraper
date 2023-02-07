@@ -44,12 +44,12 @@ def test_findall_href():
     # If this fails check the test data not the function
     assert isinstance(data, str)
 
-    links = findall_href(data)
+    links = findall_href(data, "https://www.bbc.co.uk/news/uk-64509245")
 
     assert isinstance(links, list)
     assert all([isinstance(link, str) for link in links])
     assert len(links) == 10
-    assert '/news/uk-england-64515347' in links
+    assert 'https://www.bbc.co.uk/news/uk-england-64515347' in links
 
 
 def test_extract_headline_row():
