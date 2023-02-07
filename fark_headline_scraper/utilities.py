@@ -121,12 +121,17 @@ def load_json(json_fp: str, raise_for_missing=True) -> dict:
     return data
 
 
-def load_all_json_in_dir(dir_fp: str) -> dict:
+def load_all_json_in_dir(dir_fp: str, raise_for_missing=True) -> dict:
     """
     Find all *.JSON files in a directory load all of them and try and combine
     them and return one dict with all the JSONs combined.
 
     :param dir_fp: A file path to a directory of *.JSON files to combine.
+    :type dir_fp: str
+
+    :param raise_for_missing: Should an error be raised for a missing file?
+    :type raise_for_missing: bool
+
     :return:
     rtype: dict
     """
@@ -139,7 +144,10 @@ def load_all_json_in_dir(dir_fp: str) -> dict:
 
     # If none have been found raise exception
     if not found_jsons:
-        raise Exception(f"No *.JSON files found in the folder '{dir_fp}'.")
+        if raise_for_missing:
+            raise Exception(f"No *.JSON files found in the folder '{dir_fp}'.")
+        else:
+            return {}
 
     # Load each *.JSON from disk into a dict
     for file in found_jsons:
