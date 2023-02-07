@@ -121,6 +121,21 @@ def load_json(json_fp: str, raise_for_missing=True) -> dict:
     return data
 
 
+def save_json(py_dict: dict, json_fp: str) -> None:
+    """
+    Save a dict to file as a *.JSON.
+
+    :param py_dict: File path to the *.JSON file to save to.
+    :type py_dict: dict
+
+    :param json_fp: File path to the *.JSON file to save to.
+    :type json_fp: str
+    :return:
+    """
+    with open(json_fp, "w") as f:
+        json.dump(py_dict, f, indent=4)
+
+
 def load_all_json_in_dir(dir_fp: str, raise_for_missing=True) -> dict:
     """
     Find all *.JSON files in a directory load all of them and try and combine
@@ -136,7 +151,6 @@ def load_all_json_in_dir(dir_fp: str, raise_for_missing=True) -> dict:
     rtype: dict
     """
 
-    found_jsons = []
     loaded_jsons = []
 
     # Find all *.JSON files in the directory
