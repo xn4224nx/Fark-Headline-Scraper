@@ -6,7 +6,7 @@ format.
 """
 
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urlparse
 import re
 
 
@@ -56,7 +56,7 @@ def extract_headline_row(webpage_text: str) -> dict:
     headline_data = {}
 
     # Loop over all the headline rows
-    for headline in soup.find_all("tr", {"class" : regex}):
+    for headline in soup.find_all("tr", {"class": regex}):
 
         # Extract the article link
         headline_link = headline.find("a", attrs={"href": True})["href"]
