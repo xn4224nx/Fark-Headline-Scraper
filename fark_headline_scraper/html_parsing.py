@@ -31,12 +31,23 @@ def findall_href(webpage_text: str, page_url: str) -> list[str]:
     url_split = urlparse(page_url)
     base_url = url_split.scheme + "://" + url_split.netloc
 
-    # Repair partial URLs
-    for i in range(len(urls)):
-        if base_url not in urls[i]:
-            urls[i] = base_url + urls[i]
+    # Repair partial archive URLs and remove URL's from outside the site
+    ret_ls = []
 
-    return urls
+    for i in range(len(urls)):
+
+        # Remove Nones
+        if urls[i] is None:
+            continue
+
+        # Fix archive links
+        if re.match(r"\d{4}-\d{2}-\d{2}", urls[i]):
+            ret_ls.append("https://www.fark.com/archives/" + urls[i])
+
+        elif base_url in urls[i]:
+            ret_ls.append(urls[i])
+
+    return ret_ls
 
 
 def extract_headline_row(webpage_text: str) -> dict:
@@ -63,7 +74,8 @@ def extract_headline_row(webpage_text: str) -> dict:
 
         # Extract details from the link
         link_id = re.search(r"goto/(\d+)/", headline_link).group(1)
-        article_root = re.search(r"/\d+/([a-zA-Z\.]+)", headline_link).group(1)
+        article_root = re.search(r"/\d+/([0-9a-zA-Z\.]+)",
+                                 headline_link).group(1)
 
         headline_data[link_id] = {
             "Article Site": article_root,
