@@ -41,13 +41,17 @@ def headline_parser(start_page_url="https://www.fark.com/archives/"):
         # Save All Data to Disk
         save_json(visited_webpages, "program_info/visited_webpages.JSON")
         save_json(headline_data, "program_info/headlines.JSON")
-        save_json(websites_to_visit, "program_info/websites_to_visit.JSON")
+        save_json(list(websites_to_visit), "program_info/websites_to_visit.JSON")
 
         if not connected_to_internet() or not is_website_up(start_page_url):
             break
 
         # Pick a websites_to_visit
         url = websites_to_visit.pop()
+
+        # Don't revisit websites
+        if url in visited_webpages:
+            continue
 
         # Load the html for the webpage
         raw_html_text = get_webpage_html(url)
@@ -61,3 +65,6 @@ def headline_parser(start_page_url="https://www.fark.com/archives/"):
         # See if there are any headlines on the page
         new_headlines = extract_headline_row(raw_html_text)
         headline_data = {**headline_data, **new_headlines}
+
+        # Update the record of visited websites
+        visited_webpages[url] = None
